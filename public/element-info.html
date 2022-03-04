@@ -6,7 +6,6 @@
         <title>Element Calculator</title>
         <script src="/Zolver/js/decimal.js" charset="utf-8"></script>
         <script src="/Zolver/js/jquery.js" charset="utf-8"></script>
-        <script src="/Zolver/json/periodic-table.json" charset="utf-8"></script>
         <link rel="stylesheet" href="/Zolver/css/master.css" type="text/css" charset="utf-8">
     </head>
     <body>
@@ -21,7 +20,7 @@
             <ul>
                <li> 
                     <label for="atomicNum">Enter atomic number</label>
-                    <input type="number" name="atomicNum" id="atomicNum" min="1" max="118" value="1"/>
+                    <input type="number" name="atomicNum" id="atomicNum" min="1" max="119" value="1"/>
                </li>
             </ul>
         </div>
@@ -31,15 +30,15 @@
                     <label for="principalNum">Enter Quantum Principal number (n)</label>
                     <input type="number" name="principalNum" id="principalNum" min="1" max="7" value="0"/>
                 </li>
-                <li id="l" style="display: none;">
+                <li id="l">
                     <label for="azimuthalNum">Enter Angular/Azimuthal number (ℓ)</label>
                     <input type="number" name="azimuthalNum" id="azimuthalNum" min="0" max="3" value="0"/>
                 </li>
-                <li id="ml" style="display: none;">
+                <li id="ml">
                     <label for="magneticNum">Enter Magnetic Quantum number (ℓ)</label>
                     <input type="number" name="magneticNum" id="magneticNum" min="-5" max="5" value="0"/>
                 </li>
-                <li id="ms" style="display: none;">
+                <li id="ms">
                     <label for="electronSpin">Enter Electron Spin number (ms)</label>
                     <select name="electronSpin" id="electronSpin">
                        <option value="up">1/2</option> 
