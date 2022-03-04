@@ -8,6 +8,14 @@ let score = $('#xscore');
 let mean = $('#mean');
 let SD = $('#SD');
 
+/// If user refreshes the page
+if (performance.navigation.type == performance.navigation.TYPE_RELOAD) {
+    list.val(1);
+    score.val(0);
+    mean.val(0);
+    SD.val(0);
+    inputBox_1.val(0); // clear all inputs by resetting to 0
+}
 let getArea = x => {
     // return 0.5 * erfc(-x * Math.SQRT1_2);
     return (1 - erf(-x * Math.SQRT1_2)) * 0.5
@@ -16,7 +24,6 @@ let getArea = x => {
 let getZValue = (score, mean, SD) => {
     return ((score - mean)/SD).toFixed(2);
 }
-
 // Main logic (hide divs and show divs depending on dropdown box list)
 list.change(() => {
     // Clear content div when dropdown list changes

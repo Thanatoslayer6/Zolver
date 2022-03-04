@@ -24,6 +24,13 @@ let info = {
     Variance: 0,
 };
 
+/// If user refreshes the page
+if (performance.navigation.type == performance.navigation.TYPE_RELOAD) {
+    interval.val(0)
+    lowestLimit.val(0)
+    highestLimit.val(0)
+}
+
 Submit_button.click(() => {
     // Get class size
     classSize = Math.round((Number(highestLimit.val()) - Number(lowestLimit.val()))/Number(interval.val()));

@@ -14,7 +14,8 @@
         <label for="methods">Choose a method</label>
         <select name="methods" id="methods">
            <option value="1">Get Info from Atomic Number</option> 
-           <option value="2">Get Info from Last Shell</option> 
+           <option value="2">Get Info from Quantum Numbers</option> 
+           <option value="3">Get Info from Last Shell</option> 
         </select>
         <br><br>
         <div class="getInfoFromAtomicNumber">
@@ -25,7 +26,7 @@
                </li>
             </ul>
         </div>
-        <div class="getInfoFromLastShell" style="display: none;">
+        <div class="getInfoFromQuantumNumbers" style="display: none;">
             <ul>
                 <li id="n">
                     <label for="principalNum">Enter Quantum Principal number (n)</label>
@@ -42,10 +43,18 @@
                 <li id="ms">
                     <label for="electronSpin">Enter Electron Spin number (ms)</label>
                     <select name="electronSpin" id="electronSpin">
-                       <option value="up">1/2</option> 
-                       <option value="down">-1/2</option> 
+                       <option value="1/2">1/2</option> 
+                       <option value="-1/2">-1/2</option> 
                     </select>
                 </li>
+            </ul>
+        </div>
+        <div class="getInfoFromLastShell" style="display: none;">
+            <ul>
+               <li> 
+                    <label for="lshell">Enter Last Shell from E.C</label>
+                    <input type="text" name="lshell" id="lshell" value="1s2"/>
+               </li>
             </ul>
         </div>
         <input type="button" id="go" value="Submit"/>
