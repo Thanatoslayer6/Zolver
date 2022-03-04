@@ -1,0 +1,25 @@
+/* Every css here is global */
+
+.Content {
+    margin: 1em;
+}
+
+body {
+    background-color: #191919;
+    color: #ECDBBA;
+}
+
+a {
+    color: #C84B31;
+}
+
+ul {
+    list-style: none;
+    padding: 1em;
+}
+
+input {
+    width: 10%;
+}
+
+

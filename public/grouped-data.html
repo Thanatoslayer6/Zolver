@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width">
+        <title>Grouped Data Calculator</title>
+        <link rel="stylesheet" href="/Zolver/css/master.css" type="text/css" charset="utf-8">
+        <script src="/Zolver/js/jquery.js" charset="utf-8"></script>
+        <script src="/Zolver/js/decimal.js" charset="utf-8"></script>
+        <style type="text/css" media="screen">
+            table {
+                width: 100%;
+                margin-bottom: 1em;
+            }
+            th {
+                height: 30px;
+                width: 4em;
+            }
+            table, th, td {
+                border:.5px solid #ffff;
+                text-align: center;
+            }
+            td input {
+                width: 80%;
+            }
+            p {
+                display: none;
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Grouped Data Calculator</h1>
+        <ul>
+            <li>
+                <label for="interval">Enter the class interval</label>
+                <input type="number" name="interval" id="interval"/>
+            </li>
+            <li>
+                <label for="llimit">Lowest class limit</label>
+                <input type="number" name="llimit" id="llimit"/>
+            </li>
+            <li>
+                <label for="hlimit">Highest class limit</label>
+                <input type="number" name="hlimit" id="hlimit"/>
+            </li>
+        </ul>
+        <input type="button" id="go" value="Submit"/>
+        <input type="button" id="reset" value="Reset"/>
+        <div class="Content" style="overflow-x:auto;">
+            <table style="display: none;">
+            </table>
+        </div>
+        <input type="button" id="calculate" value="Calculate" style="display: none;"/>
+        <p><b>LEGEND:</b></p>
+        <p style="background-color: rebeccapurple;" id="median">Median class</p>
+        <p style="background-color: #C84B31;" id="mode">Modal class</p>
+        <p style="background-color: mediumvioletred;" id="median_mode">Both Median and Modal class</p>
+    </body>
+    <script src="/Zolver/js/grouped-data.js" charset="utf-8"></script>
+</html>
