@@ -1,3 +1,9 @@
+// GRAB JSON
+let elements;
+$.getJSON('/Zolver/json/periodic-table.json', data => {
+    elements = data;
+});
+// SET VARIABLES
 let contentBox = $('.Content');
 let atomicNum = $('#atomicNum');
 let principalNum = $('#principalNum');
