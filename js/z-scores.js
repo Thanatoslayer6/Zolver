@@ -2,11 +2,12 @@
 let list = $('#methods');
 let contentBox = $('.Content');
 let Submit_button = $('#go');
+
 // All input boxes
-let z = $('#zinput');
-let score = $('#xscore');
-let mean = $('#mean');
-let SD = $('#SD');
+let z = $(`#zinput-${list.val()}`);
+let score = $(`#xscore-${list.val()}`);
+let mean = $(`#mean-${list.val()}`);
+let SD = $(`#SD-${list.val()}`);
 
 let resetInputBoxes = () => {
     $("input[type=number]").val(0);
@@ -62,6 +63,10 @@ list.change(() => {
         $('.getZValue').hide();
         $('.getSD').show();
     }
+    z = $(`#zinput-${list.val()}`);
+    score = $(`#xscore-${list.val()}`);
+    mean = $(`#mean-${list.val()}`);
+    SD = $(`#SD-${list.val()}`);
 })
 
 
@@ -79,6 +84,7 @@ SD.keyup((event) => {
 })
 
 let showInfo = (zvalue, area) => {
+    contentBox.append(`<br>`)
     contentBox.append(`The z value is: ${zvalue}`);
     contentBox.append(`<h3>Less than (left)</h3>`);
     contentBox.append(`<p> The area under the curve is: ${area.toFixed(4)} </p>`);
@@ -94,13 +100,29 @@ Submit_button.click(() => {
     if (list.val() == 1) {
         area = getArea(z.val());
         zvalue = z.val();
-        showInfo(zvalue, area); // Call function
+        showInfo(zvalue, area);
     } else if (list.val() == 2) {
         area = getArea(getZValue(score.val(), mean.val(), SD.val()));
         zvalue = getZValue(score.val(), mean.val(), SD.val());
         showInfo(zvalue, area);
     } else if (list.val() == 3) { // Score
-        contentBox.append(`= ${(z.val() * SD.val()) + mean.val()}`);
+        scr = (z.val() * SD.val()) + Number(mean.val());
+        area = getArea(getZValue(scr, mean.val(), SD.val()));
+        zvalue = getZValue(scr, mean.val(), SD.val());
+        contentBox.append(`x = ${scr}`);
+        showInfo(zvalue, area);
+    } else if (list.val() == 4) { // Mean
+        mn = Number(score.val()) - (z.val() * SD.val());
+        area = getArea(getZValue(score.val(), mn, SD.val()));
+        zvalue = getZValue(score.val(), mn, SD.val());
+        contentBox.append(`Mean = ${mn}`);
+        showInfo(zvalue, area);
+    } else if (list.val() == 5) { // SD
+        stdv = (score.val() - mean.val())/z.val()
+        area = getArea(getZValue(score.val(), mean.val(), stdv));
+        zvalue = getZValue(score.val(), mean.val(), stdv);
+        contentBox.append(`Standard Deviation = ${stdv}`);
+        showInfo(zvalue, area);
     }
 })
 
