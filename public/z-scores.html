@@ -6,15 +6,19 @@
         <title>Z-Score-Calculator-Concept</title>
         <script src="/Zolver/js/math.js" charset="utf-8"></script>
         <script src="/Zolver/js/jquery.js" charset="utf-8"></script>
-        <!-- Mathjax -->
-        <script src="/Zolver/mathjax/es5/tex-chtml.js" async></script>
+        <!-- Plotly -->
+        <script src="https://cdn.plot.ly/plotly-latest.min.js" async></script>
+        <!-- end -->
+        <!-- KaTex -->
+        <script src="/Zolver/katex/katex.min.js"></script>
+        <link rel="stylesheet" href="/Zolver/katex/katex.min.css" type="text/css" charset="utf-8">
         <!-- end -->
         <link rel="stylesheet" href="/Zolver/css/master.css" type="text/css" charset="utf-8">
         <style type="text/css" media="screen">
-            .MathJax {
-                text-align: left !important;
-                padding-left: 2em;
-            }
+            .katex { font-size: 2em; margin-left: 1em;}
+            .main { position: absolute; display: flex; }
+            #normal_curve { position: relative; margin: 1em; }
+            .Content { position: relative; }
         </style>
     </head>
     <body>
@@ -43,10 +47,7 @@
             </ul>
         </div>
         <div class="getZValue" style="display: none;">
-            $$
-            \Large 
-            z = \frac{x - \mu}{\sigma}
-            $$
+            <p id="eq-1"></p>
             <ul>
                 <li>
                     <label for="xscore-2">Enter the score</label>
@@ -64,10 +65,7 @@
         </div>
 
         <div class="getScore" style="display: none;">
-            $$
-            \Large 
-            x = z\sigma + \mu
-            $$
+            <p id="eq-2"></p>
             <ul>
                 <li> 
                     <label for="zinput-3">Enter z-value</label>
@@ -86,10 +84,7 @@
 
 
         <div class="getMean" style="display: none;">
-            $$
-            \Large 
-            \mu = x - z\sigma
-            $$
+            <p id="eq-3"></p>
             <ul>
                 <li>
                     <label for="xscore-4">Enter the score</label>
@@ -107,10 +102,7 @@
         </div>
 
         <div class="getSD" style="display: none;">
-            $$
-            \Large 
-            \sigma = \frac{x - \mu}{z}
-            $$
+            <p id="eq-4"></p>
             <ul>
                 <li>
                     <label for="xscore-5">Enter the score</label>
@@ -126,10 +118,11 @@
                 </li>
             </ul>
         </div>
-
         <input type="button" id="go" value="Submit"/>
-        <div class="Content">
-        </div>        
+        <div class="main">
+            <div id="normal_curve" style="width:600px;height:400px"></div>
+            <div class="Content"></div>
+        </div>
     </body>
     <script src="/Zolver/js/z-scores.js" charset="utf-8"></script>
 </html>
