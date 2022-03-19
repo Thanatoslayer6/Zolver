@@ -7,9 +7,7 @@
         <script src="/Zolver/js/math.js" charset="utf-8"></script>
         <script src="/Zolver/js/jquery.js" charset="utf-8"></script>
         <!-- Mathjax -->
-        <!-- <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script> -->
-        <!-- <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script> -->
-        <script src="/Zolver/js/tex-chtml.js" charset="utf-8"></script>
+        <script src="/Zolver/mathjax/es5/tex-chtml.js" async></script>
         <!-- end -->
         <link rel="stylesheet" href="/Zolver/css/master.css" type="text/css" charset="utf-8">
         <style type="text/css" media="screen">
@@ -20,7 +18,13 @@
         </style>
     </head>
     <body>
-        <h1>Z-Score Calculator</h1>
+        <nav>
+          <h2>Z-Score Calculator</h2>
+          <ul>
+            <li><a href="/Zolver/public/other-tools.html">Tools</a></li>
+            <li><a href="/Zolver">Home</a></li>
+          </ul>
+        </nav>
         <label for="methods">Choose a method</label>
         <select name="methods" id="methods">
            <option value="1">Get Info from Z-Value</option> 
