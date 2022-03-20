@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width">
+        <title>Z-Score-Calculator-Concept</title>
+        <script src="/Zolver/js/math.js" charset="utf-8"></script>
+        <script src="/Zolver/js/jquery.js" charset="utf-8"></script>
+        <!-- KaTex -->
+        <script src="/Zolver/katex/katex.min.js"></script>
+        <link rel="stylesheet" href="/Zolver/katex/katex.min.css" type="text/css" charset="utf-8">
+        <!-- end -->
+        <!-- Plotly -->
+        <script src="/Zolver/js/plotly-2.9.0.min.js"></script>
+        <!-- end -->
+        <link rel="stylesheet" href="/Zolver/css/master.css" type="text/css" charset="utf-8">
+        <style type="text/css" media="screen">
+            .equation .katex { font-size: 2em; margin-left: 1em;}
+            .main { position: absolute; display: flex; }
+            #normal_curve { position: relative; margin: 1em; }
+            .Content { position: relative; }
+        </style>
+    </head>
+    <body>
+        <nav>
+          <h2>Z-Score Calculator</h2>
+          <ul>
+            <li><a href="/Zolver/public/other-tools.html">Tools</a></li>
+            <li><a href="/Zolver">Home</a></li>
+          </ul>
+        </nav>
+        <label for="methods">Choose a method</label>
+        <select name="methods" id="methods">
+           <option value="1">Get Info from Z-Value</option> 
+           <option value="2">Get Z-Value</option> 
+           <option value="3">Get Score</option> 
+           <option value="4">Get Mean</option> 
+           <option value="5">Get Standard Deviation</option> 
+        </select>
+        <br><br>
+        <div class="getInfoFromZValue">
+            <ul>
+               <li> 
+                    <label for="zinput-1">Enter z-value</label>
+                    <input type="number" name="zinput-1" id="zinput-1" min="-3.6" max="3.6" value="0"/>
+               </li>
+            </ul>
+        </div>
+        <div class="getZValue" style="display: none;">
+            <div class="equation">
+                <p id="eq-1"></p>
+            </div>
+            <ul>
+                <li>
+                    <label for="xscore-2">Enter the score</label>
+                    <input type="number" name="xscore-2" id="xscore-2" value="0"/>
+                </li>
+                <li>
+                    <label for="mean-2">Enter the mean</label>
+                    <input type="number" name="mean-2" id="mean-2" value="0"/>
+                </li>
+                <li>
+                    <label for="SD-2">Enter the Standard Deviation</label>
+                    <input type="number" name="SD-2" id="SD-2" value="0"/>
+                </li>
+            </ul>
+        </div>
+
+        <div class="getScore" style="display: none;">
+            <div class="equation">
+                <p id="eq-2"></p>
+            </div>
+            <ul>
+                <li> 
+                    <label for="zinput-3">Enter z-value</label>
+                    <input type="number" name="zinput-3" id="zinput-3" min="-3.6" max="3.6" value="0"/>
+                </li>
+                <li>
+                    <label for="SD-3">Enter the Standard Deviation</label>
+                    <input type="number" name="SD-3" id="SD-3" value="0"/>
+                </li>
+                <li>
+                    <label for="mean-3">Enter the mean</label>
+                    <input type="number" name="mean-3" id="mean-3" value="0"/>
+                </li>
+            </ul>
+        </div>
+
+
+        <div class="getMean" style="display: none;">
+            <div class="equation">
+                <p id="eq-3"></p>
+            </div>
+            <ul>
+                <li>
+                    <label for="xscore-4">Enter the score</label>
+                    <input type="number" name="xscore-4" id="xscore-4" value="0"/>
+                </li>
+                <li> 
+                    <label for="zinput-4">Enter z-value</label>
+                    <input type="number" name="zinput-4" id="zinput-4" min="-3.6" max="3.6" value="0"/>
+                </li>
+                <li>
+                    <label for="SD-4">Enter the Standard Deviation</label>
+                    <input type="number" name="SD-4" id="SD-4" value="0"/>
+                </li>
+            </ul>
+        </div>
+
+        <div class="getSD" style="display: none;">
+            <div class="equation">
+                <p id="eq-4"></p>
+            </div>
+            <ul>
+                <li>
+                    <label for="xscore-5">Enter the score</label>
+                    <input type="number" name="xscore-5" id="xscore-5" value="0"/>
+                </li>
+                <li>
+                    <label for="mean-5">Enter the mean</label>
+                    <input type="number" name="mean-5" id="mean-5" value="0"/>
+                </li>
+                <li> 
+                    <label for="zinput-5">Enter z-value</label>
+                    <input type="number" name="zinput-5" id="zinput-5" min="-3.6" max="3.6" value="0"/>
+                </li>
+            </ul>
+        </div>
+        <input type="button" id="go" value="Submit"/>
+        <div class="main">
+            <div id="normal_curve" style="width:800px;height:400px"></div>
+            <div class="Content"></div>
+        </div>
+    </body>
+    <script src="/Zolver/js/z-scores.js" charset="utf-8"></script>
+</html>
