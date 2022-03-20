@@ -22,40 +22,63 @@ $('#eq-4').append(katex.renderToString("\\sigma = \\frac{x - \\mu}{z}"))
 // END
 
 // PLOT using (plotly.py)
-let plotDistributionCurve = (lowerLimit, upperLimit, zval, SD, mean, leftArea, rightArea) => {
-    let X = [], Y_full = [], Y_till_z_score = [];
-    for (let i = lowerLimit; i <= upperLimit; i = i + 0.001){
-        // y  = (1/(Math.sqrt(2*Math.PI)))*(Math.pow(Math.E,(-1*Math.pow(i,2)/2)));
-        // y = (1/(SD * Math.sqrt(2*Math.PI)))*(Math.pow(Math.E, (-0.5 * Math.pow((i-mean)/SD, 2))))
+let plotDistributionCurve = (lowerLimit, upperLimit, xscr, SD, mean, arealeft, arearight) => {
+    let X = [], Y = [], Y_till_z_score = [], Y_till_end = [], X_till_z_score = [], X_till_end = [];
+    for (let i = lowerLimit; i <= upperLimit; i = i + 0.01){
         y = (1/(Math.sqrt(2*Math.PI)*SD))*(Math.pow(Math.E,(-0.5*Math.pow(((i-mean)/SD), 2))))
         X.push(i);
-        Y_full.push(y);
-        if (i <= zval) {
+        Y.push(y);
+        if (i < xscr) {
+            X_till_z_score.push(i);
             Y_till_z_score.push(y);
+        } else if (i > xscr){
+            X_till_end.push(i);
+            Y_till_end.push(y);
         }
     }
     let trace0 = {
         x: X,
-        y: Y_full,
+        y: Y,
         fill:'none',
         type:'scatter',
     };
 
     let trace1 = {
-        x: X,
+        x: X_till_z_score,
         y: Y_till_z_score,
         fill: 'tozeroy',
-        type: 'scatter'
+        type: 'scatter',
+        name: `P(z < 0) = ${arealeft}`
+    };
+
+    let trace2 = {
+        x: X_till_end,
+        y: Y_till_end,
+        fill: 'tozeroy',
+        type: 'scatter',
+        name: `P(z > 0) = ${arearight}`
     };
 
     layout = {
         plot_bgcolor: "rgba(200,200,200,120)",
         paper_bgcolor: "rgba(200,200,200,120)",
-        xaxis: {range: [lowerLimit, upperLimit]},
-        yaxis: {range: [0, 1]}
+        xaxis: {
+            range: [lowerLimit, upperLimit]
+        },
+        shapes: [{
+            type: 'line',
+            x0: mean,
+            y0: 0,
+            x1: mean,
+            y1: Math.max(...Y),
+            line: {
+                color: 'rgb(250, 10, 10)',
+                width: 2
+            }
+        }],
     }
 
-  let data = [trace0, trace1];
+  let data = [trace0, trace1, trace2];
   Plotly.newPlot('normal_curve', data, layout);
 }
 // END
@@ -133,7 +156,8 @@ SD.keyup((event) => {
 
 let showInfo = (zvalue, area) => {
     contentBox.append(`<br>`)
-    contentBox.append(`The z value is: ${zvalue}`);
+    // contentBox.append(`The z value is: ${zvalue}`);
+    contentBox.append(katex.renderToString(`z = ${zvalue}`));
     contentBox.append(`<h3>Less than (left)</h3>`);
     contentBox.append(`<p> The area under the curve is: ${area.toFixed(4)} </p>`);
     contentBox.append(`<p> The probability or P(z < ${zvalue}): ${(area * 100).toFixed(2)}% </p>`);
@@ -154,29 +178,35 @@ Submit_button.click(() => {
     } else if (list.val() == 2) {
         area = getArea(getZValue(score.val(), mean.val(), SD.val()));
         zvalue = getZValue(score.val(), mean.val(), SD.val());
+        scr = (zvalue * SD.val()) + Number(mean.val());
         showInfo(zvalue, area);
-        plotDistributionCurve(Number(mean.val()) - 3*SD.val(), Number(mean.val()) + 3*SD.val(), zvalue, SD.val(), mean.val(), area.toFixed(4), (1 - area).toFixed(4));
+        plotDistributionCurve(Number(mean.val()) - 4*SD.val(), Number(mean.val()) + 4*SD.val(), scr, SD.val(), mean.val(), area.toFixed(4), (1 - area).toFixed(4));
     } else if (list.val() == 3) { // Score
         scr = (z.val() * SD.val()) + Number(mean.val());
         area = getArea(getZValue(scr, mean.val(), SD.val()));
         zvalue = getZValue(scr, mean.val(), SD.val());
-        contentBox.append(`x = ${scr}`);
+        // contentBox.append(`x = ${scr}`);
+        contentBox.append(katex.renderToString(`x = ${scr}`));
         showInfo(zvalue, area);
-        plotDistributionCurve(Number(mean.val()) - 3*SD.val(), Number(mean.val()) + 3*SD.val(), zvalue, SD.val(), mean.val(), area.toFixed(4), (1 - area).toFixed(4));
+        plotDistributionCurve(Number(mean.val()) - 4*SD.val(), Number(mean.val()) + 4*SD.val(), scr, SD.val(), mean.val(), area.toFixed(4), (1 - area).toFixed(4));
     } else if (list.val() == 4) { // Mean
         mn = Number(score.val()) - (z.val() * SD.val());
         area = getArea(getZValue(score.val(), mn, SD.val()));
         zvalue = getZValue(score.val(), mn, SD.val());
-        contentBox.append(`Mean = ${mn}`);
+        scr = (zvalue * SD.val()) + mn;
+        // contentBox.append(`Mean = ${mn}`);
+        contentBox.append(katex.renderToString(`\\mu = ${mn}`));
         showInfo(zvalue, area);
-        plotDistributionCurve(Number(mean.val()) - 3*SD.val(), Number(mean.val()) + 3*SD.val(), zvalue, SD.val(), mn, area.toFixed(4), (1 - area).toFixed(4));
+        plotDistributionCurve(Number(mean.val()) - 4*SD.val(), Number(mean.val()) + 4*SD.val(), scr, SD.val(), mn, area.toFixed(4), (1 - area).toFixed(4));
     } else if (list.val() == 5) { // SD
         stdv = (score.val() - mean.val())/z.val()
         area = getArea(getZValue(score.val(), mean.val(), stdv));
         zvalue = getZValue(score.val(), mean.val(), stdv);
-        contentBox.append(`Standard Deviation = ${stdv}`);
+        scr = (zvalue * stdv) + Number(mean.val());
+        // contentBox.append(`Standard Deviation = ${stdv}`);
+        contentBox.append(katex.renderToString(`\\sigma = ${stdv}`));
         showInfo(zvalue, area);
-        plotDistributionCurve(Number(mean.val()) - 3*SD.val(), Number(mean.val()) + 3*SD.val(), zvalue, stdv, mean.val(), area.toFixed(4), (1 - area).toFixed(4));
+        plotDistributionCurve(Number(mean.val()) - 4*SD.val(), Number(mean.val()) + 4*SD.val(), zvalue, stdv, mean.val(), area.toFixed(4), (1 - area).toFixed(4));
     }
 })
 

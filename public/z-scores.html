@@ -6,16 +6,16 @@
         <title>Z-Score-Calculator-Concept</title>
         <script src="/Zolver/js/math.js" charset="utf-8"></script>
         <script src="/Zolver/js/jquery.js" charset="utf-8"></script>
-        <!-- Plotly -->
-        <script src="https://cdn.plot.ly/plotly-latest.min.js" async></script>
-        <!-- end -->
         <!-- KaTex -->
         <script src="/Zolver/katex/katex.min.js"></script>
         <link rel="stylesheet" href="/Zolver/katex/katex.min.css" type="text/css" charset="utf-8">
         <!-- end -->
+        <!-- Plotly -->
+        <script src="/Zolver/js/plotly-2.9.0.min.js"></script>
+        <!-- end -->
         <link rel="stylesheet" href="/Zolver/css/master.css" type="text/css" charset="utf-8">
         <style type="text/css" media="screen">
-            .katex { font-size: 2em; margin-left: 1em;}
+            .equation .katex { font-size: 2em; margin-left: 1em;}
             .main { position: absolute; display: flex; }
             #normal_curve { position: relative; margin: 1em; }
             .Content { position: relative; }
@@ -47,7 +47,9 @@
             </ul>
         </div>
         <div class="getZValue" style="display: none;">
-            <p id="eq-1"></p>
+            <div class="equation">
+                <p id="eq-1"></p>
+            </div>
             <ul>
                 <li>
                     <label for="xscore-2">Enter the score</label>
@@ -65,7 +67,9 @@
         </div>
 
         <div class="getScore" style="display: none;">
-            <p id="eq-2"></p>
+            <div class="equation">
+                <p id="eq-2"></p>
+            </div>
             <ul>
                 <li> 
                     <label for="zinput-3">Enter z-value</label>
@@ -84,7 +88,9 @@
 
 
         <div class="getMean" style="display: none;">
-            <p id="eq-3"></p>
+            <div class="equation">
+                <p id="eq-3"></p>
+            </div>
             <ul>
                 <li>
                     <label for="xscore-4">Enter the score</label>
@@ -102,7 +108,9 @@
         </div>
 
         <div class="getSD" style="display: none;">
-            <p id="eq-4"></p>
+            <div class="equation">
+                <p id="eq-4"></p>
+            </div>
             <ul>
                 <li>
                     <label for="xscore-5">Enter the score</label>
@@ -120,7 +128,7 @@
         </div>
         <input type="button" id="go" value="Submit"/>
         <div class="main">
-            <div id="normal_curve" style="width:600px;height:400px"></div>
+            <div id="normal_curve" style="width:800px;height:400px"></div>
             <div class="Content"></div>
         </div>
     </body>
