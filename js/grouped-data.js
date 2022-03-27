@@ -6,6 +6,8 @@ let Reset_button = $('#reset');
 let Calculate_button = $('#calculate');
 let paragraphs = $('p');
 let table = $('.Content table');
+let list = $('#methods');
+let formulas = $('.formulas');
 
 let classSize, row = [];
 let info = {
@@ -23,9 +25,45 @@ let info = {
     StandardDeviation: 0,
     Variance: 0,
 };
+// Population
+
+let showFormulaPopulation = () => {
+    formulas.append(katex.renderToString(`
+        \\text{Population Mean} \\qquad \\quad \\text{Median} \\qquad \\qquad \\qquad \\qquad \\text{Mode} \\newline
+        \\qquad \\mu = \\frac{\\Sigma fx}{\\Sigma f}
+        \\space \\tilde{x} = LB_{md} + (\\frac{\\frac{n}{2} - cf}{f})i
+        \\qquad \\hat{x} = LB_{mo} + (\\frac{D_1}{D_1 + D_2})i
+    `))
+
+}
+// Sample
+let showFormulaSample = () => {
+    formulas.append(katex.renderToString(`\\bar{x} = \\frac{\\Sigma fx}{\\Sigma f}`))
+}
+
+list.change(() => {
+    Reset_button.click(); // Resets everything
+    formulas.empty();
+    if (list.val() == 1) { // Population
+        // Render formulas
+        showFormulaPopulation();
+    } else if (list.val() == 2) { // Sample
+        // Render formulas
+        showFormulaSample();
+    }
+})
+
+/*
+Population:
+- M.A.D & Variance = n
+Sample:
+- M.A.D & Variance = n - 1
+No need to do anything on S.D just sqrt(Variance)
+*/
 
 /// If user refreshes the page
 if (performance.navigation.type == performance.navigation.TYPE_RELOAD) {
+    list.val(1);
     interval.val(0)
     lowestLimit.val(0)
     highestLimit.val(0)
