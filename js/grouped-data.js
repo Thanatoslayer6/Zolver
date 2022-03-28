@@ -43,11 +43,6 @@ let info = {
 
 list.change(() => {
     Reset_button.click(); // Resets everything
-    if (list.val() == 1) { // Population
-        //
-    } else if (list.val() == 2) { // Sample
-        //
-    }
 })
 
 /*
@@ -133,11 +128,14 @@ Calculate_button.click(() => {
     info.Range = highestLimit.val() - lowestLimit.val();
     // Determine whether population or sample
     if (list.val() == 1) { // Population
-        getMeasuresOfCentralTendency(false);
-        getMeasuresOfVariability(false);
+        getMeasuresOfCentralTendency(1);
+        getMeasuresOfVariability(1);
     } else if (list.val() == 2) { // Sample
-        getMeasuresOfCentralTendency(true);
-        getMeasuresOfVariability(true);
+        getMeasuresOfCentralTendency(2);
+        getMeasuresOfVariability(2);
+    } else if (list.val() == 3) { // Sample but Mean is not configured
+        getMeasuresOfCentralTendency(1);
+        getMeasuresOfVariability(2);
     }
     showCalculatedValues();
     showTableLegend();
@@ -145,10 +143,10 @@ Calculate_button.click(() => {
 
 let getMeasuresOfCentralTendency = (bool) => {
     let temp = 0; // Holder variable for all sorts of computations
-    if (bool == false) { // Population
+    if (bool == 1) { // Population
         temp = (info.Efx/info.totalFrequency).toFixed(4); // Get mean
         info.Mean = Number(Decimal(temp).valueOf());
-    } else if (bool == true) { // Sample
+    } else if (bool == 2) { // Sample
         temp = (info.Efx/(info.totalFrequency - 1)).toFixed(4); // Get mean
         info.Mean = Number(Decimal(temp).valueOf());
     }
@@ -242,10 +240,10 @@ let getMeasuresOfVariability = (bool) => {
     // Variance
     // temp = Decimal(info.Ef_x_mean_sqrd).dividedBy(info.totalFrequency).toFixed(4);
     // info.Variance = Number(Decimal(temp).valueOf());
-    if (bool == false) { // Population
+    if (bool == 1) { // Population
         temp = Decimal(info.Ef_x_mean_sqrd).dividedBy(info.totalFrequency).toFixed(4);
         info.Variance = Number(Decimal(temp).valueOf());
-    } else if (bool == true) { // Sample
+    } else if (bool == 2) { // Sample
         temp = Decimal(info.Ef_x_mean_sqrd).dividedBy(info.totalFrequency - 1).toFixed(4);
         info.Variance = Number(Decimal(temp).valueOf());
     }
