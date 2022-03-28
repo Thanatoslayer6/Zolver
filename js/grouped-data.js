@@ -7,7 +7,7 @@ let Calculate_button = $('#calculate');
 let paragraphs = $('p');
 let table = $('.Content table');
 let list = $('#methods');
-let formulas = $('.formulas');
+// let formulas = $('.formulas');
 
 let classSize, row = [];
 let info = {
@@ -27,35 +27,32 @@ let info = {
 };
 // Population
 
-let showFormulaPopulation = () => {
-    formulas.append(katex.renderToString(`
-        \\text{Population Mean} \\qquad \\quad \\text{Median} \\qquad \\qquad \\qquad \\qquad \\text{Mode} \\newline
-        \\qquad \\mu = \\frac{\\Sigma fx}{\\Sigma f}
-        \\space \\tilde{x} = LB_{md} + (\\frac{\\frac{n}{2} - cf}{f})i
-        \\qquad \\hat{x} = LB_{mo} + (\\frac{D_1}{D_1 + D_2})i
-    `))
+// let showFormulaPopulation = () => {
+//     formulas.append(katex.renderToString(`
+//         \\text{Population Mean} \\qquad \\quad \\text{Median} \\qquad \\qquad \\qquad \\qquad \\text{Mode} \\newline
+//         \\qquad \\mu = \\frac{\\Sigma fx}{\\Sigma f}
+//         \\space \\tilde{x} = LB_{md} + (\\frac{\\frac{n}{2} - cf}{f})i
+//         \\qquad \\hat{x} = LB_{mo} + (\\frac{D_1}{D_1 + D_2})i
+//     `))
 
-}
-// Sample
-let showFormulaSample = () => {
-    formulas.append(katex.renderToString(`\\bar{x} = \\frac{\\Sigma fx}{\\Sigma f}`))
-}
+// }
+// // Sample
+// let showFormulaSample = () => {
+//     formulas.append(katex.renderToString(`\\bar{x} = \\frac{\\Sigma fx}{\\Sigma f}`))
+// }
 
 list.change(() => {
     Reset_button.click(); // Resets everything
-    formulas.empty();
     if (list.val() == 1) { // Population
-        // Render formulas
-        showFormulaPopulation();
+        //
     } else if (list.val() == 2) { // Sample
-        // Render formulas
-        showFormulaSample();
+        //
     }
 })
 
 /*
 Population:
-- M.A.D & Variance = n
+- M.A.D & Variance = n (everything is just normal)
 Sample:
 - M.A.D & Variance = n - 1
 No need to do anything on S.D just sqrt(Variance)
@@ -112,6 +109,7 @@ Reset_button.click(() => {
 Calculate_button.click(() => {
     // First let's hide the button itself so that only reset button is shown
     Calculate_button.hide();
+
     // Get all values in frequency column
     for (let i = 0; i < classSize; i++) {
         let freq = $(`tr td input#frequency-${i}`).val()
@@ -133,16 +131,27 @@ Calculate_button.click(() => {
     }
     // Get mean round to 4 decimal places
     info.Range = highestLimit.val() - lowestLimit.val();
-    getMeasuresOfCentralTendency();
-    getMeasuresOfVariability();
+    // Determine whether population or sample
+    if (list.val() == 1) { // Population
+        getMeasuresOfCentralTendency(false);
+        getMeasuresOfVariability(false);
+    } else if (list.val() == 2) { // Sample
+        getMeasuresOfCentralTendency(true);
+        getMeasuresOfVariability(true);
+    }
     showCalculatedValues();
     showTableLegend();
 })
 
-let getMeasuresOfCentralTendency = () => {
+let getMeasuresOfCentralTendency = (bool) => {
     let temp = 0; // Holder variable for all sorts of computations
-    temp = (info.Efx/info.totalFrequency).toFixed(4); // Get mean
-    info.Mean = Number(Decimal(temp).valueOf());
+    if (bool == false) { // Population
+        temp = (info.Efx/info.totalFrequency).toFixed(4); // Get mean
+        info.Mean = Number(Decimal(temp).valueOf());
+    } else if (bool == true) { // Sample
+        temp = (info.Efx/(info.totalFrequency - 1)).toFixed(4); // Get mean
+        info.Mean = Number(Decimal(temp).valueOf());
+    }
     // Get median class index
     info.medianClassIndex = row.findIndex(item => {
         return item.cumulative_frequency >= (info.totalFrequency/2)
@@ -203,7 +212,7 @@ let getMeasuresOfCentralTendency = () => {
     
 }
 
-let getMeasuresOfVariability = () => {
+let getMeasuresOfVariability = (bool) => {
     let temp = 0; // Holder variable for precision
     for (let i = 0; i < classSize; i++) {
         // Get |x - Mean|
@@ -231,12 +240,20 @@ let getMeasuresOfVariability = () => {
     temp = Decimal(info.Ef_x_mean).dividedBy(info.totalFrequency).toFixed(4);
     info.MeanDeviation = Number(Decimal(temp).valueOf());
     // Variance
-    temp = Decimal(info.Ef_x_mean_sqrd).dividedBy(info.totalFrequency).toFixed(4);
-    info.Variance = Number(Decimal(temp).valueOf());
+    // temp = Decimal(info.Ef_x_mean_sqrd).dividedBy(info.totalFrequency).toFixed(4);
+    // info.Variance = Number(Decimal(temp).valueOf());
+    if (bool == false) { // Population
+        temp = Decimal(info.Ef_x_mean_sqrd).dividedBy(info.totalFrequency).toFixed(4);
+        info.Variance = Number(Decimal(temp).valueOf());
+    } else if (bool == true) { // Sample
+        temp = Decimal(info.Ef_x_mean_sqrd).dividedBy(info.totalFrequency - 1).toFixed(4);
+        info.Variance = Number(Decimal(temp).valueOf());
+    }
     // Standard deviation
     temp = Decimal(info.Variance).sqrt().toFixed(4);
     info.StandardDeviation = Number(Decimal(temp).valueOf());
 }
+
 let showTableLegend = () => {
     paragraphs.show();
     paragraphs.css('display', 'inline');
